@@ -116,21 +116,17 @@ def open_hoadon():
             conn.close()
 
     def delete():
-        mahd = entry_mahd.get().strip()
-        if not mahd:
-            messagebox.showwarning("Thiếu dữ liệu", "Chọn hóa đơn để xóa!")
-            return
-        if messagebox.askyesno("Xác nhận", "Bạn có chắc muốn xóa hóa đơn này không?"):
-            conn = connect_db()
-            try:
-                cur = conn.cursor()
-                cur.execute("DELETE FROM hoadon WHERE mahd=%s", (mahd,))
-                conn.commit()
-                messagebox.showinfo("Thành công", "Đã xóa hóa đơn!")
-                load_data()
-                clear_input()
-            finally:
-                conn.close()
+        selected = tree.selection() 
+        if not selected: 
+            messagebox.showwarning("Chưa chọn", "Hãy chọn nhân viên để xóa") 
+            return 
+        mahd = tree.item(selected)["values"][0] 
+        conn = connect_db() 
+        cur = conn.cursor() 
+        cur.execute("DELETE FROM nhanvien WHERE manv=%s", (mahd,)) 
+        conn.commit() 
+        conn.close() 
+        load_data() 
 
     def select_item(event):
         selected = tree.selection()

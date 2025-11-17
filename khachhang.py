@@ -107,21 +107,17 @@ def open_khachhang():
             conn.close()
 
     def delete():
-        makh = entry_makh.get().strip()
-        if not makh:
-            messagebox.showwarning("Thiếu dữ liệu", "Chọn khách hàng để xóa!")
-            return
-        if messagebox.askyesno("Xác nhận", "Bạn có chắc muốn xóa khách hàng này không?"):
-            conn = connect_db()
-            try:
-                cur = conn.cursor()
-                cur.execute("DELETE FROM khachhang WHERE makh=%s", (makh,))
-                conn.commit()
-                messagebox.showinfo("Thành công", "Đã xóa khách hàng!")
-                load_data()
-                clear_input()
-            finally:
-                conn.close()
+        selected = tree.selection() 
+        if not selected: 
+            messagebox.showwarning("Chưa chọn", "Hãy chọn nhân viên để xóa") 
+            return 
+        makh = tree.item(selected)["values"][0] 
+        conn = connect_db() 
+        cur = conn.cursor() 
+        cur.execute("DELETE FROM nhanvien WHERE manv=%s", (makh,)) 
+        conn.commit() 
+        conn.close() 
+        load_data() 
 
     def select_item(event):
         selected = tree.selection()

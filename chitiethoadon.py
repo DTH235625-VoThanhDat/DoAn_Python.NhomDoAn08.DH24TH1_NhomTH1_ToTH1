@@ -135,23 +135,17 @@ def open_cthd():
             conn.close()
 
     def delete():
-        mahd = entry_mahd.get().strip()
-        mavl = entry_mavl.get().strip()
-        if not mahd or not mavl:
-            messagebox.showwarning("Thiếu dữ liệu", "Chọn chi tiết để xóa!")
-            return
-        if messagebox.askyesno("Xác nhận", "Bạn có chắc muốn xóa chi tiết này?"):
-            conn = connect_db()
-            try:
-                cur = conn.cursor()
-                cur.execute("DELETE FROM chitiethoadon WHERE mahd=%s AND mavl=%s", (mahd, mavl))
-                cur.execute("UPDATE hoadon SET tongtien = (SELECT COALESCE(SUM(thanhtien),0) FROM chitiethoadon WHERE mahd=%s) WHERE mahd=%s", (mahd, mahd))
-                conn.commit()
-                messagebox.showinfo("Thành công", "Đã xóa chi tiết!")
-                load_data()
-                clear_input()
-            finally:
-                conn.close()
+        selected = tree.selection() 
+        if not selected: 
+            messagebox.showwarning("Chưa chọn", "Hãy chọn nhân viên để xóa") 
+            return 
+        mahd, makh = tree.item(selected)["values"][0] 
+        conn = connect_db() 
+        cur = conn.cursor() 
+        cur.execute("DELETE FROM nhanvien WHERE manv=%s", (mahd, makh,)) 
+        conn.commit() 
+        conn.close() 
+        load_data() 
 
     def select_item(event):
         selected = tree.selection()

@@ -122,21 +122,17 @@ def open_nhanvien():
             conn.close()
 
     def delete():
-        manv = entry_manv.get().strip()
-        if not manv:
-            messagebox.showwarning("Thiếu dữ liệu", "Chọn nhân viên để xóa!")
-            return
-        if messagebox.askyesno("Xác nhận", "Bạn có chắc muốn xóa nhân viên này không?"):
-            conn = connect_db()
-            try:
-                cur = conn.cursor()
-                cur.execute("DELETE FROM nhanvien WHERE manv=%s", (manv,))
-                conn.commit()
-                messagebox.showinfo("Thành công", "Đã xóa nhân viên!")
-                load_data()
-                clear_input()
-            finally:
-                conn.close()
+        selected = tree.selection() 
+        if not selected: 
+            messagebox.showwarning("Chưa chọn", "Hãy chọn nhân viên để xóa") 
+            return 
+        manv = tree.item(selected)["values"][0] 
+        conn = connect_db() 
+        cur = conn.cursor() 
+        cur.execute("DELETE FROM nhanvien WHERE manv=%s", (manv,)) 
+        conn.commit() 
+        conn.close() 
+        load_data() 
 
     def select_item(event):
         selected = tree.selection()

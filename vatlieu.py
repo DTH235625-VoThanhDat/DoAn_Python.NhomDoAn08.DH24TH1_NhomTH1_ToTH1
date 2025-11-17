@@ -124,24 +124,17 @@ def open_vatlieu():
 
     # ===================== Xóa =====================
     def delete():
-        mavl = entry_mavl.get().strip()
-        if not mavl:
-            messagebox.showwarning("Thiếu dữ liệu", "Chọn vật liệu để xóa!")
-            return
-
-        if messagebox.askyesno("Xác nhận", "Bạn có chắc muốn xóa vật liệu này không?"):
-            conn = connect_db()
-            try:
-                cur = conn.cursor()
-                cur.execute("DELETE FROM vatlieu WHERE mavl=%s", (mavl,))
-                conn.commit()
-                messagebox.showinfo("Thành công", "Đã xóa vật liệu!")
-                load_data()
-                clear_input()
-            except Exception as e:
-                messagebox.showerror("Lỗi", str(e))
-            finally:
-                conn.close()
+        selected = tree.selection() 
+        if not selected: 
+            messagebox.showwarning("Chưa chọn", "Hãy chọn nhân viên để xóa") 
+            return 
+        mavl = tree.item(selected)["values"][0] 
+        conn = connect_db() 
+        cur = conn.cursor() 
+        cur.execute("DELETE FROM nhanvien WHERE manv=%s", (mavl,)) 
+        conn.commit() 
+        conn.close() 
+        load_data() 
 
     # ===================== Chọn dòng trong bảng =====================
     def select_item(event):
