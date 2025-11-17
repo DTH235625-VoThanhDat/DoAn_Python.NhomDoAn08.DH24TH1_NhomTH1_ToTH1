@@ -36,7 +36,7 @@ def open_khachhang():
     entry_sdt = tk.Entry(frame_input, width=20)
     entry_sdt.grid(row=2, column=1, padx=5, pady=5, sticky="w")
 
-    columns = ("makh", "tenkh", "diachi", "sdt")
+    columns = ("Mã KH", "Tên KH", "Địa chỉ", "SĐT")
     tree = ttk.Treeview(win, columns=columns, show="headings", height=10)
     for col in columns:
         tree.heading(col, text=col.upper())
@@ -114,7 +114,7 @@ def open_khachhang():
         makh = tree.item(selected)["values"][0] 
         conn = connect_db() 
         cur = conn.cursor() 
-        cur.execute("DELETE FROM nhanvien WHERE manv=%s", (makh,)) 
+        cur.execute("DELETE FROM khachhang WHERE makh=%s", (makh,)) 
         conn.commit() 
         conn.close() 
         load_data() 

@@ -111,7 +111,7 @@ def open_vatlieu():
         try:
             cur = conn.cursor()
             cur.execute(
-                "UPDATE vatlieu SET tenvl=%s, loaivl=%s, donvitinh=%s, gia=%s, soluong=%s WHERE mavl=%s",
+                "UPDATE vatlieu SET tenvl=%s, loaivl=%s, donvitinh=%s, dongia=%s, soluong=%s WHERE mavl=%s",
                 (tenvl, loaivl, dvt, gia, soluong, mavl))
             conn.commit()
             messagebox.showinfo("Thành công", "Đã cập nhật vật liệu!")
@@ -131,7 +131,7 @@ def open_vatlieu():
         mavl = tree.item(selected)["values"][0] 
         conn = connect_db() 
         cur = conn.cursor() 
-        cur.execute("DELETE FROM nhanvien WHERE manv=%s", (mavl,)) 
+        cur.execute("DELETE FROM vatlieu WHERE mavl=%s", (mavl,)) 
         conn.commit() 
         conn.close() 
         load_data() 

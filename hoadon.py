@@ -42,7 +42,7 @@ def open_hoadon():
     entry_tongtien = tk.Entry(frame_input, width=20)
     entry_tongtien.grid(row=2, column=1, padx=5, pady=5, sticky="w")
 
-    columns = ("mahd", "manv", "makh", "ngaylap", "tongtien")
+    columns = ("Mã HD", "Mã NV", "Mã KH", "Ngày lập", "Tổng tiền")
     tree = ttk.Treeview(win, columns=columns, show="headings", height=10)
     for col in columns:
         tree.heading(col, text=col.upper())
@@ -123,7 +123,7 @@ def open_hoadon():
         mahd = tree.item(selected)["values"][0] 
         conn = connect_db() 
         cur = conn.cursor() 
-        cur.execute("DELETE FROM nhanvien WHERE manv=%s", (mahd,)) 
+        cur.execute("DELETE FROM hoadon WHERE mahd=%s", (mahd,)) 
         conn.commit() 
         conn.close() 
         load_data() 

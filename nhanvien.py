@@ -45,7 +45,7 @@ def open_nhanvien():
     entry_diachi = tk.Entry(frame_input, width=25)
     entry_diachi.grid(row=2, column=3, padx=5, pady=5, sticky="w")
 
-    columns = ("manv", "tennv", "gioitinh", "chucvu", "sdt", "diachi")
+    columns = ("Mã NV", "Tên NV", "Giới tính", "Chức vụ", "SĐT", "Địa chỉ")
     tree = ttk.Treeview(win, columns=columns, show="headings", height=10)
     for col in columns:
         tree.heading(col, text=col.capitalize())

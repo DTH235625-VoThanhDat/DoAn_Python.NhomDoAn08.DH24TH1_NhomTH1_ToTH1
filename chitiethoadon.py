@@ -44,7 +44,7 @@ def open_cthd():
     entry_thanhtien = tk.Entry(frame_input, width=20)
     entry_thanhtien.grid(row=2, column=3, padx=5, pady=5)
 
-    columns = ("mahd", "mavl", "soluong", "dongia", "giamgia", "thanhtien")
+    columns = ("Mã HD", "Mã VL", "Số lượng", "Đơn giá", "Giảm giá", "Thành tiền")
     tree = ttk.Treeview(win, columns=columns, show="headings", height=10)
     for col in columns:
         tree.heading(col, text=col.upper())
@@ -142,7 +142,7 @@ def open_cthd():
         mahd, makh = tree.item(selected)["values"][0] 
         conn = connect_db() 
         cur = conn.cursor() 
-        cur.execute("DELETE FROM nhanvien WHERE manv=%s", (mahd, makh,)) 
+        cur.execute("DELETE FROM chitiethoadon WHERE mahd=%s, makh=%s", (mahd, makh,)) 
         conn.commit() 
         conn.close() 
         load_data() 
